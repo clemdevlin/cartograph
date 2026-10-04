@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ThemeControl } from "@/components/theme-control";
 import { parseTheme, THEME_COOKIE } from "@/lib/theme";
+import Link from "next/link";
 
 // Everything inside the app renders within this shell, always under an
 // active organization. No organization yet means first sign-in: /start
@@ -17,7 +18,10 @@ export default async function WorkspaceLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <header className="flex h-9 shrink-0 items-center gap-3 border-b border-line bg-surface px-3">
-        <span className="font-mono text-xs font-semibold tracking-tight">cartograph</span>
+        <Link href="/" className="flex items-center gap-2">
+          <img src="/icon.png" alt="" className="h-5 w-5 rounded-md" />
+          <span className="font-mono text-xs font-semibold tracking-tight">cartograph</span>
+        </Link>
         <span className="text-line">/</span>
         <OrganizationSwitcher
           hidePersonal

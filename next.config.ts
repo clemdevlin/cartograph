@@ -8,6 +8,7 @@ const codespaceHost = process.env.CODESPACE_NAME
   : undefined;
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   experimental: {
     serverActions: {
       allowedOrigins: ["localhost:3000", ...(codespaceHost ? [codespaceHost] : [])],
