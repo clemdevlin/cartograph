@@ -7,9 +7,10 @@ import { wrapOpenAI } from "langsmith/wrappers/openai";
 // Exact snapshots, never a moving alias: an alias changes the model under a
 // cached answer without changing its key. Each model is part of its own
 // tasks' cache keys, so re-pinning one invalidates only its own answers.
+const model = "apodex/apodex-1.1-mini:free"
 export const MODELS = {
-  explain: "gpt-5.5-2026-04-23",
-  classify: "gpt-5.4-mini-2026-03-17",
+  explain: model, //"gpt-5.5-2026-04-23",
+  classify: model, //"gpt-5.4-mini-2026-03-17",
 } as const;
 
 export type TracingStatus = { on: true; project: string } | { on: false; reason: string };
@@ -30,7 +31,7 @@ export function ai(): OpenAI {
   if (client) return client;
   const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) throw new Error("OPENAI_API_KEY isn't set in .env.local, so nothing can be explained");
-  client = wrapOpenAI(new OpenAI({ apiKey }), { tracingEnabled: tracingStatus().on });
+  client = wrapOpenAI(new OpenAI({ apiKey, baseURL: 'https://openrouter.ai/api/v1' }), { tracingEnabled: tracingStatus().on });
   return client;
 }
 
